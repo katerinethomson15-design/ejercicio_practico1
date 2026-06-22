@@ -3,15 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Primera Página Web</title>
+    <title>Sistema de Ventas</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; background-color: #f0f4f8; padding: 50px; }
-        h1 { color: #007bff; }
-        p { font-size: 18px; color: #333; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: #007bff;
+            color: white;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .total {
+            margin-top: 20px;
+            text-align: right;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: #218838;
+        }
     </style>
 </head>
 <body>
-    <h1>¡Hola Mundo desde la Nube!</h1>
-    <p>Esta es la primera.</p>
+
+<div class="container">
+    <h2>Sistema de Ventas</h2>
+
+    <input type="text" id="producto" placeholder="Producto">
+    <input type="number" id="precio" placeholder="Precio">
+    <input type="number" id="cantidad" placeholder="Cantidad">
+    <button onclick="agregarProducto()">Agregar</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody id="tablaVentas"></tbody>
+    </table>
+
+    <div class="total">
+        Total: $<span id="total">0.00</span>
+    </div>
+</div>
+
+<script>
+    let totalVenta = 0;
+
+    function agregarProducto() {
+        const producto = document.getElementById("producto").value;
+        const precio = parseFloat(document.getElementById("precio").value);
+        const cantidad = parseInt(document.getElementById("cantidad").value);
+
+        if (!producto || isNaN(precio) || isNaN(cantidad)) {
+            alert("Complete todos los campos");
+            return;
+        }
+
+        const subtotal = precio * cantidad;
+        totalVenta += subtotal;
+
+        const fila = `
+            <tr>
+                <td>${producto}</td>
+                <td>$${precio.toFixed(2)}</td>
+                <td>${cantidad}</td>
+                <td>$${subtotal.toFixed(2)}</td>
+            </tr>
+        `;
+
+        document.getElementById("tablaVentas").innerHTML += fila;
+        document.getElementById("total").textContent = totalVenta.toFixed(2);
+
+        document.getElementById("producto").value = "";
+        document.getElementById("precio").value = "";
+        document.getElementById("cantidad").value = "";
+    }
+</script>
+
 </body>
 </html>
